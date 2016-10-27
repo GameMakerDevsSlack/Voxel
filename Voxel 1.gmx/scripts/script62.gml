@@ -1,10 +1,10 @@
-///quaternion_lerp( quaternion1, quaternion2, t )
+///slerp_3d( vector1, vector2, t )
 //
-//  Returns the spherical linear interpolation of two quaternions.
+//  Returns the spherical linear interpolation of two 3D vectors.
 //
-//      quaternion1    quaternion, 4-element array
-//      quaternion2    quaternion, 4-element array
-//      t              paramter, float, 0 <= t <= 1
+//      vector1    3D vector, 3-element array
+//      vector2    3D vector, 3-element array
+//      t          paramter, float, 0 <= t <= 1
 //
 //  Made by @jujuadams.
 //
@@ -14,7 +14,7 @@ var _a = argument0;
 var _b = argument1;
 var _t = argument2;
 
-var _angle = abs( arccos( _a[0]*_b[0] + _a[1]*_b[1] + _a[2]*_b[2] + _a[3]*_b[3] ) );
+var _angle = arccos( dot_product_3d_normalised( _a[0], _a[1], _a[2],   _b[0], _b[1], _b[2] ) );
 
 var _s0 = sin( _angle );
 
@@ -24,7 +24,6 @@ if ( abs( _s0 ) < 0.001 ) {
     _result[0] = 0.5*_a[0] + 0.5*_b[0];
     _result[1] = 0.5*_a[1] + 0.5*_b[1];
     _result[2] = 0.5*_a[2] + 0.5*_b[2];
-    _result[3] = 0.5*_a[3] + 0.5*_b[3];
     
 } else {
     
@@ -34,8 +33,7 @@ if ( abs( _s0 ) < 0.001 ) {
     _result[0] = _s1*_a[0] + _s2*_b[0];
     _result[1] = _s1*_a[1] + _s2*_b[1];
     _result[2] = _s1*_a[2] + _s2*_b[2];
-    _result[3] = _s1*_a[3] + _s2*_b[3];
-    
+
 }
 
 return _result;
