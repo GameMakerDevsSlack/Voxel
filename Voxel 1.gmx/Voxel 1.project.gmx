@@ -21,23 +21,6 @@
       </ConfigOptions>
       <filename>pot.vox</filename>
     </datafile>
-    <datafile>
-      <name>voxel.vox</name>
-      <exists>-1</exists>
-      <size>276</size>
-      <exportAction>2</exportAction>
-      <exportDir></exportDir>
-      <overwrite>0</overwrite>
-      <freeData>-1</freeData>
-      <removeEnd>0</removeEnd>
-      <store>0</store>
-      <ConfigOptions>
-        <Config name="Default">
-          <CopyToMask>9223372036854775807</CopyToMask>
-        </Config>
-      </ConfigOptions>
-      <filename>voxel.vox</filename>
-    </datafile>
   </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
@@ -61,9 +44,9 @@
       <script>scripts\quaternion_rotate_x.gml</script>
       <script>scripts\quaternion_rotate_y.gml</script>
       <script>scripts\quaternion_rotate_z.gml</script>
+      <script>scripts\quaternion_lerp.gml</script>
     </scripts>
   </scripts>
-  <shaders name="shaders"/>
   <fonts name="fonts">
     <font>fonts\fnt_cambria16</font>
   </fonts>

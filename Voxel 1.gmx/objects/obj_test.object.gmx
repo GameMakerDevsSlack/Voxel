@@ -37,13 +37,25 @@ global.voxel_vft_simple = vertex_format_end();
 vbf_pot = scr_voxel_load( "pot.vox", global.voxel_vft_simple );
 vertex_freeze( vbf_pot );
 
+/*
 if ( display_aa == 2 ) {
     display_reset( 2, false );
 } else if ( display_aa &gt;= 4 ) {
     display_reset( 4, false );
 }
+*/
 
 quaternion = quaternion_init();
+quaternion = quaternion_yaw( quaternion, -90 );
+quaternion = quaternion_pitch( quaternion, 90 );
+quaternion_basis = quaternion;
+
+slerp_go = false;
+slerp_start = current_time;
+slerp_t = 0;
+slerp_duration = 500;
+slerp_quaternion_a = undefined;
+slerp_quaternion_b = undefined;
 </string>
           </argument>
         </arguments>
@@ -68,19 +80,36 @@ quaternion = quaternion_init();
             <kind>1</kind>
             <string>///Step
 
-if ( keyboard_check( ord( "A" ) ) ) quaternion = quaternion_roll(  quaternion,  3 );
-if ( keyboard_check( ord( "D" ) ) ) quaternion = quaternion_roll(  quaternion, -3 );
-if ( keyboard_check( ord( "Q" ) ) ) quaternion = quaternion_yaw(   quaternion,  3 );
-if ( keyboard_check( ord( "E" ) ) ) quaternion = quaternion_yaw(   quaternion, -3 );
-if ( keyboard_check( ord( "W" ) ) ) quaternion = quaternion_pitch( quaternion,  3 );
-if ( keyboard_check( ord( "S" ) ) ) quaternion = quaternion_pitch( quaternion, -3 );
-
-if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_rotate_x( quaternion,  3 );
-if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_rotate_x( quaternion, -3 );
-if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_rotate_y( quaternion,  3 );
-if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_rotate_y( quaternion, -3 );
-if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_rotate_z( quaternion,  3 );
-if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_rotate_z( quaternion, -3 );
+if ( !slerp_go ) {
+    
+    if ( keyboard_check( ord( "A" ) ) ) quaternion = quaternion_roll(  quaternion,  1 );
+    if ( keyboard_check( ord( "D" ) ) ) quaternion = quaternion_roll(  quaternion, -1 );
+    if ( keyboard_check( ord( "Q" ) ) ) quaternion = quaternion_yaw(   quaternion,  1 );
+    if ( keyboard_check( ord( "E" ) ) ) quaternion = quaternion_yaw(   quaternion, -1 );
+    if ( keyboard_check( ord( "W" ) ) ) quaternion = quaternion_pitch( quaternion,  1 );
+    if ( keyboard_check( ord( "S" ) ) ) quaternion = quaternion_pitch( quaternion, -1 );
+    
+    if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_rotate_x( quaternion,  1 );
+    if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_rotate_x( quaternion, -1 );
+    if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_rotate_y( quaternion,  1 );
+    if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_rotate_y( quaternion, -1 );
+    if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_rotate_z( quaternion,  1 );
+    if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_rotate_z( quaternion, -1 );
+    
+    if ( keyboard_check_pressed( vk_space ) ) {
+        slerp_go = true;
+        slerp_start = current_time;
+        slerp_quaternion_a = quaternion;
+        slerp_quaternion_b = quaternion_basis;
+    }
+    
+} else {
+    
+    slerp_t = clamp( (current_time - slerp_start) / slerp_duration, 0, 1 );
+    quaternion = quaternion_lerp( slerp_quaternion_a, slerp_quaternion_b, slerp_t );
+    if ( slerp_t &gt;= 1 ) slerp_go = false;
+    
+}
 </string>
           </argument>
         </arguments>
