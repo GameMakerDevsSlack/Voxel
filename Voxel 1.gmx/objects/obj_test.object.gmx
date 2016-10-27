@@ -55,7 +55,7 @@ slerp_duration = 1400;
 slerp_quaternion_a = quaternion;
 slerp_quaternion_b = quaternion_random();
 
-demo_mode = true;
+demo_mode = false;
 </string>
           </argument>
         </arguments>
@@ -84,19 +84,19 @@ if ( !demo_mode ) {
     
     if ( !slerp_go ) {
         
-        if ( keyboard_check( ord( "A" ) ) ) quaternion = quaternion_roll(  quaternion,  1 );
-        if ( keyboard_check( ord( "D" ) ) ) quaternion = quaternion_roll(  quaternion, -1 );
-        if ( keyboard_check( ord( "Q" ) ) ) quaternion = quaternion_yaw(   quaternion,  1 );
-        if ( keyboard_check( ord( "E" ) ) ) quaternion = quaternion_yaw(   quaternion, -1 );
-        if ( keyboard_check( ord( "W" ) ) ) quaternion = quaternion_pitch( quaternion,  1 );
-        if ( keyboard_check( ord( "S" ) ) ) quaternion = quaternion_pitch( quaternion, -1 );
+        if ( keyboard_check( ord( "S" ) ) ) quaternion = quaternion_rotate_x( quaternion,  1 );
+        if ( keyboard_check( ord( "W" ) ) ) quaternion = quaternion_rotate_x( quaternion, -1 );
+        if ( keyboard_check( ord( "Q" ) ) ) quaternion = quaternion_rotate_y( quaternion,  1 );
+        if ( keyboard_check( ord( "E" ) ) ) quaternion = quaternion_rotate_y( quaternion, -1 );
+        if ( keyboard_check( ord( "D" ) ) ) quaternion = quaternion_rotate_z( quaternion,  1 );
+        if ( keyboard_check( ord( "A" ) ) ) quaternion = quaternion_rotate_z( quaternion, -1 );
         
-        if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_rotate_x( quaternion,  1 );
-        if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_rotate_x( quaternion, -1 );
-        if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_rotate_y( quaternion,  1 );
-        if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_rotate_y( quaternion, -1 );
-        if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_rotate_z( quaternion,  1 );
-        if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_rotate_z( quaternion, -1 );
+        if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_roll(  quaternion,  1 );
+        if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_roll(  quaternion, -1 );
+        if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_yaw(   quaternion,  1 );
+        if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_yaw(   quaternion, -1 );
+        if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_pitch( quaternion,  1 );
+        if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_pitch( quaternion, -1 );
         
         if ( keyboard_check_pressed( vk_space ) ) {
             slerp_go = true;
@@ -172,7 +172,7 @@ draw_set_colour( c_white );
 draw_set_valign( fa_bottom );
 draw_text( 5, room_height - 5, string( fps ) + "/" + string( floor( fps_real ) ) );
 draw_set_valign( fa_top );
-draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMobOfSteve" );
+draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMobOfSteve##WASDQE - Rotate in world#IJKLUO - Rotate locally#Enter - Toggle demo mode#Space - Return to upright" );
 </string>
           </argument>
         </arguments>
