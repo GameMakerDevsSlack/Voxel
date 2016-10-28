@@ -53,47 +53,47 @@ while( buffer_tell( _buffer ) < _size ) {
             var _colour = global.voxel_palette[_i] & c_white;
             var _alpha = ( global.voxel_palette[_i] >> 24 ) & 255;
             
-            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); //top
-            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
+            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, -1,  0 ); //top
+            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, -1,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, -1,  0 );
+            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, -1,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, -1,  0 );
+            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, -1,  0 );
             
-            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); //right
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
+            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  1,  0,  0 ); //right
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  1,  0,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  1,  0,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  1,  0,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  1,  0,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  1,  0,  0 );
             
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); //bottom
-            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, 1,  0 ); //bottom
+            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, 1,  0 );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, 1,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, 1,  0 );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, 1,  0 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0, 1,  0 );
             
-            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); //left
-            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff, -1,  0,  0 ); //left
+            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff, -1,  0,  0 );
+            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff, -1,  0,  0 );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff, -1,  0,  0 );
+            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff, -1,  0,  0 );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff, -1,  0,  0 );
             
-            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); //under
-            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha );
+            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0, -1 ); //under
+            vertex_position_3d( _vbuff, _x+1, _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0, -1 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0, -1 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0, -1 );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0, -1 );
+            vertex_position_3d( _vbuff, _x  , _y  , _z   ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0, -1 );
             
-            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); //over
-            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
-            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha );
+            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0,  1 ); //over
+            vertex_position_3d( _vbuff, _x+1, _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0,  1 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0,  1 );
+            vertex_position_3d( _vbuff, _x+1, _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0,  1 );
+            vertex_position_3d( _vbuff, _x  , _y+1, _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0,  1 );
+            vertex_position_3d( _vbuff, _x  , _y  , _z+1 ); vertex_colour( _vbuff, _colour, _alpha ); vertex_normal( _vbuff,  0,  0,  1 );
             
         }
         
