@@ -76,9 +76,9 @@ varying float v_vFog;
 
 void DoAlphaTestB(vec4 SrcColour)
 {
-    		if (SrcColour.a <= gm_AlphaRefValue)
+    if (SrcColour.a <= gm_AlphaRefValue)
     {
-    			discard;
+    discard;
     }
 }
 
@@ -89,7 +89,7 @@ void DoFogB(inout vec4 SrcColour, float fogval)
 
 void main()
 {
-    vec4 clr = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
+    vec4 clr = v_vColour;// texture2D( gm_BaseTexture, v_vTexcoord );
     DoAlphaTestB(clr);
     DoFogB(clr, v_vFog);
     
