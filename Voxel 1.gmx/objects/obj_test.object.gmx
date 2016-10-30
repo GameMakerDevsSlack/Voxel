@@ -47,8 +47,6 @@ if ( display_aa == 2 ) {
 */
 
 quaternion = quaternion_init();
-//quaternion = quaternion_yaw( quaternion, -90 );
-//quaternion = quaternion_pitch( quaternion, 90 );
 quaternion_basis = quaternion;
 
 slerp_go = false;
@@ -59,6 +57,22 @@ slerp_quaternion_a = quaternion;
 slerp_quaternion_b = quaternion_random();
 
 demo_mode = false;
+
+light_from_x  =    0;
+light_from_y  =    0;
+light_from_z  =  800;
+light_to_x    =    0;
+light_to_y    =    0;
+light_to_z    =    0;
+light_up_x    =    1;
+light_up_y    =    0;
+light_up_z    =    0;
+light_angle   =   50;
+light_zfar    = 2000;
+light_width   = room_width;
+light_height  = room_height;
+light_surface = noone;
+light_matrix  = undefined;
 </string>
           </argument>
         </arguments>
@@ -192,7 +206,7 @@ draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMo
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>self</whoName>
+        <whoName>other</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
@@ -201,31 +215,79 @@ draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMo
             <string>///Draw
 
 d3d_start();
-d3d_set_projection_ext( -900, 0, 0,   0, 0, 0,   0, 0, 1,   45, room_width/room_height,   1, 2000 );
-//d3d_set_projection_ortho( 0, 0, room_width, room_height, 0 );
 
-shader_set( shd_default );
+if ( !surface_exists( light_surface ) ) light_surface = surface_create( light_width, light_height );
 
-d3d_set_lighting( true );
-d3d_light_define_ambient( c_black );
-d3d_light_define_point( 0,     0,  0, 600,   1000, c_ltgray );
-//d3d_light_define_point( 1,     0,  600, 0,   1000, make_colour_rgb( 255, 200, 200 ) );
-//d3d_light_define_point( 2,  -100, -600, 0,   1000, make_colour_rgb(   0,   0, 155 ) );
-d3d_light_enable( 0, true );
-//d3d_light_enable( 1, true );
-//d3d_light_enable( 2, true );
+surface_set_target( light_surface );
+draw_clear_alpha( c_white, 1 );
 
+d3d_set_projection_ext( light_from_x, light_from_y, light_from_z,
+                          light_to_x,   light_to_y,   light_to_z,
+                          light_up_x,   light_up_y,   light_up_z,
+                         light_angle,   light_width/light_height, 1, light_zfar );
+light_matrix = matrix_multiply( matrix_get( matrix_view ), matrix_get( matrix_projection ) );
+
+shader_set( shd_depth );
 d3d_transform_add_translation( -8, -8, -8 );
 matrix_multiply_world( quaternion_matrix( quaternion ) );
 d3d_transform_add_scaling( 32, 32, 32 );
-
 vertex_submit( vbf_pot, pr_trianglelist, -1 );
+d3d_transform_set_identity();
 shader_reset();
 
-d3d_transform_set_identity();
+surface_reset_target();
+
+
+
+if ( !keyboard_check( vk_f2 ) ) {
+    
+    shader_set( shd_shadow );
+    
+    shader_set_uniform_matrix_array( shader_get_uniform( shd_shadow, "lightmatrix" ), light_matrix );
+    texture_set_stage( shader_get_sampler_index( shd_shadow, "depthmap" ), surface_get_texture( light_surface ) );
+    shader_set_uniform_f( shader_get_uniform( shd_shadow, "depthsize" ), surface_get_width( light_surface ) );
+    shader_set_uniform_f( shader_get_uniform( shd_shadow, "lightcol" ), 1, 1, 1 );
+    shader_set_uniform_f( shader_get_uniform( shd_shadow, "ambcol" ), 0, 0, 0, 0.8 );
+    
+    d3d_set_projection_ext( -900, 0, 0,   0, 0, 0,   0, 0, 1,   45, room_width/room_height,   1, 2000 );
+    
+    d3d_transform_add_translation( -8, -8, -8 );
+    matrix_multiply_world( quaternion_matrix( quaternion ) );
+    d3d_transform_add_scaling( 32, 32, 32 );
+    vertex_submit( vbf_pot, pr_trianglelist, -1 );
+    d3d_transform_set_identity();
+    
+    shader_reset();
+    
+} else {
+    
+    d3d_set_projection_ext( -900, 0, 0,   0, 0, 0,   0, 0, 1,   45, room_width/room_height,   1, 2000 );
+    //d3d_set_projection_ortho( 0, 0, room_width, room_height, 0 );
+    
+    shader_set( shd_default );
+    
+    d3d_light_define_ambient( c_black );
+    d3d_light_define_point( 0,     0,  0, 600,   1000, c_ltgray );
+    //d3d_light_define_point( 1,     0,  600, 0,   1000, make_colour_rgb( 255, 200, 200 ) );
+    //d3d_light_define_point( 2,  -100, -600, 0,   1000, make_colour_rgb(   0,   0, 155 ) );
+    d3d_light_enable( 0, true );
+    //d3d_light_enable( 1, true );
+    //d3d_light_enable( 2, true );
+    
+    d3d_transform_add_translation( -8, -8, -8 );
+    matrix_multiply_world( quaternion_matrix( quaternion ) );
+    d3d_transform_add_scaling( 32, 32, 32 );
+    vertex_submit( vbf_pot, pr_trianglelist, -1 );
+    d3d_transform_set_identity();
+    
+    shader_reset();
+    
+}
 
 d3d_end();
-//d3d_set_lighting( false );
+d3d_set_projection_ortho( 0, 0, room_width, room_height, 0 );
+
+if ( keyboard_check( vk_f1 ) ) draw_surface( light_surface, 0, 0 );
 </string>
           </argument>
         </arguments>

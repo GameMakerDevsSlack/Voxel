@@ -7,11 +7,11 @@ if XSsoft
 {
     if XSlinear
     {
-        shader_set(shdr_linear)
+        //shader_set(shdr_linear)
     }
     else
     {
-        shader_set(shdr_soft)
+        //shader_set(shdr_soft)
     }
 }
 else
