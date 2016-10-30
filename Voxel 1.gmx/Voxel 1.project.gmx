@@ -95,6 +95,7 @@
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shd_default.shader</shader>
+    <shader type="GLSLES">shaders\shd_depth.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fnt_cambria16</font>

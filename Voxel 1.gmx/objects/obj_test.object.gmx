@@ -47,8 +47,8 @@ if ( display_aa == 2 ) {
 */
 
 quaternion = quaternion_init();
-quaternion = quaternion_yaw( quaternion, -90 );
-quaternion = quaternion_pitch( quaternion, 90 );
+//quaternion = quaternion_yaw( quaternion, -90 );
+//quaternion = quaternion_pitch( quaternion, 90 );
 quaternion_basis = quaternion;
 
 slerp_go = false;
@@ -201,22 +201,23 @@ draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMo
             <string>///Draw
 
 d3d_start();
-d3d_set_projection_ortho( 0, 0, room_width, room_height, 0 );
+d3d_set_projection_ext( -900, 0, 0,   0, 0, 0,   0, 0, 1,   45, room_width/room_height,   1, 2000 );
+//d3d_set_projection_ortho( 0, 0, room_width, room_height, 0 );
 
-//shader_set( shd_default );
+shader_set( shd_default );
+
 d3d_set_lighting( true );
 d3d_light_define_ambient( c_black );
-d3d_light_define_point( 0,   room_width/4, room_height/2, -room_width/2, 1000, c_ltgray );
-d3d_light_define_point( 1,   room_width/2,             0,             0,  900, make_colour_rgb( 255, 200, 200 ) );
-d3d_light_define_point( 2, 3*room_width/4, room_height/2, -room_width/2,  800, make_colour_rgb(   0,   0, 155 ) );
+d3d_light_define_point( 0,     0,  0, 600,   1000, c_ltgray );
+//d3d_light_define_point( 1,     0,  600, 0,   1000, make_colour_rgb( 255, 200, 200 ) );
+//d3d_light_define_point( 2,  -100, -600, 0,   1000, make_colour_rgb(   0,   0, 155 ) );
 d3d_light_enable( 0, true );
-d3d_light_enable( 1, true );
-d3d_light_enable( 2, true );
+//d3d_light_enable( 1, true );
+//d3d_light_enable( 2, true );
 
 d3d_transform_add_translation( -8, -8, -8 );
 matrix_multiply_world( quaternion_matrix( quaternion ) );
-d3d_transform_add_scaling( 32, 32, 1 );
-d3d_transform_add_translation( room_width/2, room_height/2, 0 );
+d3d_transform_add_scaling( 32, 32, 32 );
 
 vertex_submit( vbf_pot, pr_trianglelist, -1 );
 shader_reset();
@@ -224,7 +225,7 @@ shader_reset();
 d3d_transform_set_identity();
 
 d3d_end();
-d3d_set_lighting( false );
+//d3d_set_lighting( false );
 </string>
           </argument>
         </arguments>
