@@ -14,7 +14,7 @@ ly2 = argument4;
 lz2 = argument5;
 surface_set_target(XSdepth)
 draw_clear(-1)
-d3d_set_projection_ext(lx,ly,lz,lx2,ly2,lz2,0,0,1,90,1,1,65536)
+d3d_set_projection_ext(lx,ly,lz,lx2,ly2,lz2,0,0,1,30,1,1,65536)
 XSmat = matrix_multiply(matrix_get(matrix_view), matrix_get(matrix_projection));
 
 shader_set(shdr_depth)

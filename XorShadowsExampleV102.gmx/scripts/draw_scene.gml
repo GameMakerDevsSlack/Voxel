@@ -35,6 +35,9 @@ else
         d3d_transform_set_identity()
     }
     d3d_set_culling(1)
+    
+    d3d_model_draw( model_torus_knot, 96, 128, 32, background_get_texture( bac_blank ) );
+    
     with(obj_plant)
     {
         d3d_transform_add_rotation_y(180)

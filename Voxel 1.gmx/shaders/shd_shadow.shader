@@ -47,13 +47,11 @@ float hard(sampler2D depth,vec3 coord,vec2 size,float bias)
 }
 void main()
 {
-    vec2 scoord = vec2(v_vScoord.x/v_vScoord.z+1.0,3.0-v_vScoord.y/v_vScoord.z)*0.5;
+    vec2 scoord = vec2(v_vScoord.x/v_vScoord.z+1.0,1.0-v_vScoord.y/v_vScoord.z)*0.5;
     
-    //float light = clamp(hard(depthmap,vec3(scoord,v_vScoord.z),vec2(depthsize),1024.0/depthsize),0.0,1.0);
+    float light = clamp(hard(depthmap,vec3(scoord,v_vScoord.z),vec2(depthsize),1024.0/depthsize),0.0,1.0);
     //light = clamp(light * max(dot(vec3(0.0,0.0,-1.0),v_vLight),0.0),0.0,1.0)*max(1.0-length(scoord-vec2(0.5,1.5))*2.0,0.0);
     
-    gl_FragColor = vec4( floor(scoord.xy*depthsize+0.5)/depthsize, 0.0, 1.0 ); //texture2D( depthmap, floor(scoord.xy*depthsize+0.5)/depthsize );
-    
-    //gl_FragColor = /*texture2D(gm_BaseTexture,v_vTexcoord) **/ vec4(mix(ambcol.rgb,ambcol.rgb+lightcol,ambcol.a*light),1.0);
+    gl_FragColor = /*texture2D(gm_BaseTexture,v_vTexcoord) **/ vec4(mix(ambcol.rgb,ambcol.rgb+lightcol,ambcol.a*light),1.0);
     
 }
