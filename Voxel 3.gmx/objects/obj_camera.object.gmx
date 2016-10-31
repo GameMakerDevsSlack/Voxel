@@ -35,6 +35,7 @@ direction = 315;
 zdir      = -25;
 z         = 100;
 aspect    = view_wview[0]/view_hview[0];
+znear     = 1;
 zfar      = 2000;
 </string>
           </argument>
@@ -58,7 +59,8 @@ zfar      = 2000;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Update camera
+            <string>///Step
+
 if ( mouse_check_button( mb_left ) ) {
     
     var _wx = window_mouse_get_x();
@@ -72,42 +74,17 @@ if ( mouse_check_button( mb_left ) ) {
     
 }
 
-var _axis = 2 * ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) );
-var _strafe = 2 * ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
+var _axis = 1 * ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) );
+var _strafe = 1 * ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
 x += lengthdir_x( _axis, direction ) + lengthdir_x( _strafe, direction - 90 );
 y += lengthdir_y( _axis, direction ) + lengthdir_y( _strafe, direction - 90 );
-z += 2 * ( keyboard_check( ord( "Q" ) ) - keyboard_check( ord( "E" ) ) );
-
-if ( keyboard_check_pressed( vk_f1 ) ) debug = !debug;
-with( obj_light ) {
-    
-    if ( keyboard_check_pressed( vk_f2 ) ) light_soft = !light_soft;
-    
-    /*
-    if ( keyboard_check( vk_space ) ) {
-        
-        var _x = dsin( direction + 90 ) * dcos( zdir );
-        var _y = dcos( direction + 90 ) * dcos( zdir );
-        var _z = dsin( zdir );
-        
-        light_from_x = x;
-        light_from_y = y;
-        light_from_z = z;
-        
-        light_to_x = light_from_x + _x;
-        light_to_y = light_from_y + _y;
-        light_to_z = light_from_z + _z;
-        
-    }
-    */
-    
-}
+z += 1 * ( keyboard_check( ord( "Q" ) ) - keyboard_check( ord( "E" ) ) );
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -124,79 +101,19 @@ with( obj_light ) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw GUI
+            <string>///UE1 - Set projection
 
-if ( debug ) {
-    draw_surface_stretched( obj_light.light_depth_surface, 0, 0, 720, 720 );
-    draw_set_colour( c_red );
-    draw_set_font( fnt_cambria16 );
-    draw_text( 5, 5, string( global.cubes * 12 ) + "#fps=" + string( fps ) + "/" + string( floor( fps_real ) ) );
-    draw_set_colour( c_white );
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw
-
-//shader_set( shd_depth_linear );
-//shader_set_uniform_f( shader_get_uniform( shd_depth_linear, "uCameraFar" ), zfar );
-
-//Initialise 3D
-d3d_start();
-d3d_set_lighting( false );
-draw_set_alpha_test( true );
-texture_set_interpolation( true );
-texture_set_repeat( false );
-d3d_set_culling( true );
-
-with( obj_light ) event_user( 1 );
-
-//Set up camera
 var _x_to = x + dsin( direction + 90 ) * dcos( zdir );
 var _y_to = y + dcos( direction + 90 ) * dcos( zdir );
 var _z_to = z + dsin( zdir );
+
 d3d_set_projection_ext(     x,     y,     z,
                         _x_to, _y_to, _z_to,
                             0,     0,     1,
                         45, aspect, 0.01, zfar );
 
-//Set shadow mapping shader
-with( obj_light ) {
-    var _shader;
-    if ( light_soft ) _shader = shd_soft else _shader = shd_point;
-    shader_set( _shader );
-    shader_set_uniform_matrix_array( shader_get_uniform( _shader, "lightmatrix" ), light_proj_matrix );
-    texture_set_stage( shader_get_sampler_index( _shader, "depthmap" ),            surface_get_texture ( light_depth_surface ) );
-    shader_set_uniform_f( shader_get_uniform( _shader, "depthsize" ),              surface_get_width( light_depth_surface ) );
-    shader_set_uniform_f( shader_get_uniform( _shader, "lightcol" ),               light_colour_r, light_colour_g, light_colour_b );
-    shader_set_uniform_f( shader_get_uniform( _shader, "ambcol" ),                 light_ambient_r, light_ambient_g, light_ambient_b, 1 );
-    draw_scene();
-    shader_reset();
-}
-
-with( obj_light ) event_user( 0 );
-
-d3d_end();
-draw_set_colour( c_white );
+//mtx_projection     = matrix_get( matrix_projection );
+//mtx_inv_projection = InverseMatrix4( mtx_projection );
 </string>
           </argument>
         </arguments>

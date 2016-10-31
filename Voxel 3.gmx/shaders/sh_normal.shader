@@ -1,11 +1,6 @@
-//
-// Simple passthrough vertex shader
-//
-attribute vec3 in_Position;                  // (x,y,z)
-attribute vec3 in_Normal;                    // (x,y,z)
-attribute vec2 in_Texcoords;
+attribute vec3 in_Position;
+attribute vec3 in_Normal;
 
-varying vec2 v_vTexcoords;
 varying vec3 v_vNormal;
 
 mat3 inverse(mat3 Original) {
@@ -69,14 +64,9 @@ void main() {
     
     mat3 normalMatrix = getNormalMatrix();
     v_vNormal = normalize((normalMatrix * in_Normal) * vec3( 1, 1, -1 ));
-    v_vTexcoords = in_Texcoords;
 }
 
-//######################_==_YOYO_SHADER_MARKER_==_######################@~//
-// Simple passthrough fragment shader
-//
-varying vec3 v_vNormal;
-varying vec2 v_vTexcoords;
+//######################_==_YOYO_SHADER_MARKER_==_######################@~varying vec3 v_vNormal;
 
 vec4 packNormal( vec3 Normal ){
     Normal = normalize( Normal );
@@ -87,12 +77,7 @@ vec4 packNormal( vec3 Normal ){
 
 
 void main() {
-    vec4 textureSample = texture2D( gm_BaseTexture, v_vTexcoords );
-    if (textureSample.a < 0.5)
-        discard;
-        
     vec4 normColour = packNormal( normalize( v_vNormal ) );
-    //vec4 normColour = vec4( v_vNormal, 1.0 );
     gl_FragColor = normColour;
 }
 

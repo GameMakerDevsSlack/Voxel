@@ -1,33 +1,11 @@
-/// render_normal_buffer()
-/*
-    This shader renders the view-space normals of your scene
+///render_normal_buffer()
 
-*/
-
-
-
-
-// Set the shader to the depth shader
-shader_set(sh_normal);
-
-// Set drawing target to depth buffer
 surface_set_target( normal_buffer );
+draw_clear_alpha( c_white, 0 );
 
-// Clear the depth buffer to full white
-draw_clear_alpha( c_white, 0.0 );
-
-if ( !keyboard_check( vk_f2 ) ) {
-
-    // Re set camera projection
-    camera_set_projection();
-    
-    // Render 3d scene
-    world_draw();
-
-}
-
-// Reset the drawing target
-surface_reset_target();
-
-// Reset shader
+shader_set( shd_ssao_normal );
+with( obj_camera ) event_user( 1 );
+draw_scene();
 shader_reset();
+
+surface_reset_target();

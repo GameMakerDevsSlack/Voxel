@@ -26,7 +26,7 @@
   <sounds name="sound"/>
   <sprites name="sprites"/>
   <backgrounds name="background">
-    <background>background\bck_nadda</background>
+    <background>background\bck_blank</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -96,22 +96,21 @@
     <script>scripts\scr_voxel_build_rgb.gml</script>
     <script>scripts\scr_voxel_load.gml</script>
     <scripts name="Voxel 3">
+      <script>scripts\generate_noise.gml</script>
+      <script>scripts\generate_poisson_distribution.gml</script>
       <script>scripts\render_blur_ssao.gml</script>
       <script>scripts\render_depth_buffer.gml</script>
       <script>scripts\render_diffuse_buffer.gml</script>
+      <script>scripts\render_hlsl.gml</script>
       <script>scripts\render_normal_buffer.gml</script>
       <script>scripts\render_ssao_buffer.gml</script>
-      <script>scripts\SSAO_DRAW.gml</script>
-      <script>scripts\SSAO_INIT.gml</script>
-      <script>scripts\SSAO_RENDER.gml</script>
-      <script>scripts\generateRandomPoissonDisk.gml</script>
-      <script>scripts\generateNoise.gml</script>
-      <script>scripts\generateFBO.gml</script>
-      <script>scripts\camera_set_projection.gml</script>
-      <script>scripts\world_draw.gml</script>
-      <script>scripts\InverseMatrix4.gml</script>
-      <script>scripts\Array2DToMatrix.gml</script>
-      <script>scripts\MatrixToArray2D.gml</script>
+      <scripts name="Matrix">
+        <script>scripts\Array2DToMatrix.gml</script>
+        <script>scripts\TransposeMatrix3.gml</script>
+        <script>scripts\MatrixToArray2D.gml</script>
+        <script>scripts\InverseMatrix4.gml</script>
+        <script>scripts\InverseMatrix3.gml</script>
+      </scripts>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -124,12 +123,12 @@
       <shader type="GLSLES">shaders\shd_depth_linear.shader</shader>
     </shaders>
     <shaders name="Voxel 3">
-      <shader type="GLSLES">shaders\sh_depth.shader</shader>
-      <shader type="GLSLES">shaders\sh_diffuse.shader</shader>
-      <shader type="GLSLES">shaders\sh_normal.shader</shader>
       <shader type="GLSLES">shaders\sh_post_combine.shader</shader>
       <shader type="GLSLES">shaders\sh_post_ssao.shader</shader>
       <shader type="GLSLES">shaders\sh_post_ssao_blur.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_depth_linear.shader</shader>
+      <shader type="HLSL9">shaders\shd_ssao_hlsl.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_normal.shader</shader>
     </shaders>
   </shaders>
   <fonts name="fonts">
@@ -139,9 +138,13 @@
   <objects name="objects">
     <object>objects\obj_init</object>
     <object>objects\obj_camera</object>
+    <object>objects\obj_lighting_manager</object>
     <object>objects\obj_pot</object>
     <object>objects\obj_light</object>
-    <object>objects\obj_ssao</object>
+    <objects name="Voxel 3">
+      <object>objects\obj_camera_new</object>
+      <object>objects\obj_ssao</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

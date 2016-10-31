@@ -9,7 +9,8 @@ d3d_set_lighting( false );
 
 // set camera projection
 if( !is_array(matrix_proj) ){
-    camera_set_projection();
+    
+    with( obj_camera ) event_user( 1 );
     
     // Store inverse projection matrix for SSAO shader
     // NEEDS to be called after the projection

@@ -1,37 +1,13 @@
-/// render_depth_buffer()
-/*
-    This shader renders the the scene where each vertex is stored
-    as a distance to the camera
-*/
+///render_depth_buffer()
 
-
-
-
-// Set the shader to the depth shader
-shader_set( sh_depth );
-
-// Set drawing target to depth buffer
 surface_set_target( depth_buffer );
-
-// Clear the depth buffer to full white
 draw_clear_alpha( c_white, 0.0 );
 
-if ( !keyboard_check( vk_f3 ) ) {
-
-    // Send uniforms
-    shader_set_uniform_f(shader_get_uniform( sh_depth, "uCameraFar"), 1 );
-    shader_set_uniform_f(shader_get_uniform( sh_depth, "uCameraNear"), 2000 );
-    
-    // Re set camera projection
-    camera_set_projection();
-    
-    // Render 3d scene
-    world_draw();
-
-}
-
-// Reset the drawing target
-surface_reset_target();
-
-// Reset shader
+with( obj_camera ) event_user( 1 );
+shader_set( shd_ssao_depth_linear );
+shader_set_uniform_f(shader_get_uniform( shd_ssao_depth_linear, "uCameraFar"), obj_camera.zfar );
+shader_set_uniform_f(shader_get_uniform( shd_ssao_depth_linear, "uCameraNear"), obj_camera.znear );
+draw_scene();
 shader_reset();
+
+surface_reset_target();

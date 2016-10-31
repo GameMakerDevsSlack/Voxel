@@ -1,10 +1,10 @@
 // SSAO VARIABLES
 global.SSAO_SAMPLES     = 16;   // Samples are "occluders". More Samples = more precise SSAO = slower
-global.SSAO_RADIUS      = 4.0;  // Radius controls what distance the occluders are measured away from the sample point
-global.SSAO_STRENGTH    = 0.05;  // Strength multiplies the SSAO
-global.SSAO_POWER       = 22.0;  // Power contrasts the SSAO
+global.SSAO_RADIUS      = 0.85;  // Radius controls what distance the occluders are measured away from the sample point
+global.SSAO_STRENGTH    = 0.10;  // Strength multiplies the SSAO
+global.SSAO_POWER       = 1.0;  // Power contrasts the SSAO
 global.SSAO_RESOLUTION  = 1.0;  // Resolution controls well... the resolution of the SSAO. 1.0 = screen resolution. 2.0 = 2x screen res. 0.5 = 0.5x screen res.
-global.SSAO_BLUR_PASSES = 2;  // This is the amount of times the SSAO gets blurred.
+global.SSAO_BLUR_PASSES = 1;  // This is the amount of times the SSAO gets blurred.
 
 global.SSAO_ENABLE    = true;   // Render the SSAO buffer ontop of the scene
 global.DIFFUSE_ENABLE = true;   // Render the diffuse buffer (textures)
