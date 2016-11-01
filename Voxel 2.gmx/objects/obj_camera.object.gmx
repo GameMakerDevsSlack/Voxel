@@ -36,6 +36,7 @@ zdir      = -25;
 z         = 100;
 aspect    = view_wview[0]/view_hview[0];
 zfar      = 2000;
+click_time = 0;
 </string>
           </argument>
         </arguments>
@@ -59,16 +60,28 @@ zfar      = 2000;
           <argument>
             <kind>1</kind>
             <string>///Update camera
-if ( mouse_check_button( mb_left ) ) {
     
-    var _wx = window_mouse_get_x();
-    var _wy = window_mouse_get_y();
-    var _ww = window_get_width()/2;
-    var _wh = window_get_height()/2;
+var _wx = window_mouse_get_x();
+var _wy = window_mouse_get_y();
+var _ww = window_get_width()/2;
+var _wh = window_get_height()/2;
+
+if ( mouse_check_button_pressed( mb_left ) ) {
     
     if ( window_has_focus() ) window_mouse_set( _ww, _wh );
+    window_set_cursor( cr_none );
+
+} else if ( mouse_check_button( mb_left ) ) {
+    
+    if ( window_has_focus() ) window_mouse_set( _ww, _wh );
+    
     direction += 0.2 * ( _ww - _wx );
     zdir = clamp( zdir + 0.2*( _wh - _wy ), -89, 89 );
+    window_set_cursor( cr_none );
+    
+} else {
+    
+    window_set_cursor( cr_default );
     
 }
 
@@ -79,27 +92,24 @@ y += lengthdir_y( _axis, direction ) + lengthdir_y( _strafe, direction - 90 );
 z += 2 * ( keyboard_check( ord( "Q" ) ) - keyboard_check( ord( "E" ) ) );
 
 if ( keyboard_check_pressed( vk_f1 ) ) debug = !debug;
-with( obj_light ) {
+if ( keyboard_check_pressed( vk_f2 ) ) with( obj_light ) light_soft = !light_soft;
+if ( keyboard_check( vk_control ) ) {
     
-    if ( keyboard_check_pressed( vk_f2 ) ) light_soft = !light_soft;
+    var _x = dsin( direction + 90 ) * dcos( zdir );
+    var _y = dcos( direction + 90 ) * dcos( zdir );
+    var _z = dsin( zdir );
     
-    /*
-    if ( keyboard_check( vk_space ) ) {
+    with( obj_light ) {
         
-        var _x = dsin( direction + 90 ) * dcos( zdir );
-        var _y = dcos( direction + 90 ) * dcos( zdir );
-        var _z = dsin( zdir );
-        
-        light_from_x = x;
-        light_from_y = y;
-        light_from_z = z;
+        light_from_x = other.x;
+        light_from_y = other.y;
+        light_from_z = other.z;
         
         light_to_x = light_from_x + _x;
         light_to_y = light_from_y + _y;
         light_to_z = light_from_z + _z;
         
     }
-    */
     
 }
 </string>
@@ -132,6 +142,19 @@ if ( debug ) {
     draw_set_font( fnt_cambria16 );
     draw_text( 5, 5, string( global.cubes * 12 ) + "#fps=" + string( fps ) + "/" + string( floor( fps_real ) ) );
     draw_set_colour( c_white );
+} else {
+    draw_set_colour( c_white );
+    draw_set_font( fnt_cambria16 );
+    draw_text( 5, 5, "MagicaVoxel importer#" +
+                     "1st Nov 2016#@jujuadams##" +
+                     "Art by @AngryMobOfSteve##" +
+                     "WASDQE - Move#" + 
+                     "Left click+drag - Look#" +
+                     "Control - Place light##" +
+                     "TFGHRY - Rotate pots in world#" +
+                     "IJKLUO - Rotate pots locally#" +
+                     "Enter - Toggle pots' demo mode#" +
+                     "Space - Return pots to upright" );
 }
 </string>
           </argument>

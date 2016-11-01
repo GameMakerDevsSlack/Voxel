@@ -62,25 +62,38 @@ demo_mode = true;
             <kind>1</kind>
             <string>///Step
 
+if ( keyboard_check( ord( "G" ) ) )
+or ( keyboard_check( ord( "T" ) ) )
+or ( keyboard_check( ord( "F" ) ) )
+or ( keyboard_check( ord( "H" ) ) )
+or ( keyboard_check( ord( "Y" ) ) )
+or ( keyboard_check( ord( "R" ) ) )
+or ( keyboard_check( ord( "J" ) ) )
+or ( keyboard_check( ord( "L" ) ) )
+or ( keyboard_check( ord( "O" ) ) )
+or ( keyboard_check( ord( "U" ) ) )
+or ( keyboard_check( ord( "K" ) ) )
+or ( keyboard_check( ord( "I" ) ) ) demo_mode = false;
+
 if ( !demo_mode ) {
     
     if ( !slerp_go ) {
         
-        if ( keyboard_check( ord( "G" ) ) ) quaternion = quaternion_rotate_x( quaternion,  1 );
-        if ( keyboard_check( ord( "T" ) ) ) quaternion = quaternion_rotate_x( quaternion, -1 );
-        if ( keyboard_check( ord( "F" ) ) ) quaternion = quaternion_rotate_y( quaternion,  1 );
-        if ( keyboard_check( ord( "H" ) ) ) quaternion = quaternion_rotate_y( quaternion, -1 );
-        if ( keyboard_check( ord( "Y" ) ) ) quaternion = quaternion_rotate_z( quaternion,  1 );
-        if ( keyboard_check( ord( "R" ) ) ) quaternion = quaternion_rotate_z( quaternion, -1 );
+        if ( keyboard_check( ord( "G" ) ) ) quaternion = quaternion_rotate_x( quaternion,  2 );
+        if ( keyboard_check( ord( "T" ) ) ) quaternion = quaternion_rotate_x( quaternion, -2 );
+        if ( keyboard_check( ord( "F" ) ) ) quaternion = quaternion_rotate_y( quaternion,  2 );
+        if ( keyboard_check( ord( "H" ) ) ) quaternion = quaternion_rotate_y( quaternion, -2 );
+        if ( keyboard_check( ord( "Y" ) ) ) quaternion = quaternion_rotate_z( quaternion,  2 );
+        if ( keyboard_check( ord( "R" ) ) ) quaternion = quaternion_rotate_z( quaternion, -2 );
         
-        if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_roll(  quaternion,  1 );
-        if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_roll(  quaternion, -1 );
-        if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_yaw(   quaternion,  1 );
-        if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_yaw(   quaternion, -1 );
-        if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_pitch( quaternion,  1 );
-        if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_pitch( quaternion, -1 );
+        if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_roll(  quaternion,  2 );
+        if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_roll(  quaternion, -2 );
+        if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_yaw(   quaternion,  2 );
+        if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_yaw(   quaternion, -2 );
+        if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_pitch( quaternion,  2 );
+        if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_pitch( quaternion, -2 );
         
-        if ( keyboard_check_pressed( vk_control ) ) {
+        if ( keyboard_check_pressed( vk_space ) ) {
             slerp_go = true;
             slerp_start = current_time;
             slerp_quaternion_a = quaternion;
@@ -107,7 +120,7 @@ if ( !demo_mode ) {
         
     if ( keyboard_check_pressed( vk_enter ) ) demo_mode = false;
     
-    if ( keyboard_check_pressed( vk_control ) ) {
+    if ( keyboard_check_pressed( vk_space ) ) {
         demo_mode = false;
         slerp_go = true;
         slerp_start = current_time;
