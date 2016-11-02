@@ -59,9 +59,9 @@
       <shader type="GLSLES">shaders\shd_ssao_depth_linear.shader</shader>
       <shader type="GLSLES">shaders\shd_ssao_normal.shader</shader>
       <shader type="HLSL9">shaders\shd_ssao_hlsl.shader</shader>
-      <shader type="GLSLES">shaders\sh_post_ssao.shader</shader>
-      <shader type="GLSLES">shaders\sh_post_ssao_blur.shader</shader>
-      <shader type="GLSLES">shaders\sh_post_combine.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_post.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_blur.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_combine.shader</shader>
     </shaders>
   </shaders>
   <fonts name="fonts">

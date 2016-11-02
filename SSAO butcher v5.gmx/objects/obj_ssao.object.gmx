@@ -95,23 +95,39 @@ if ( keyboard_check_pressed( vk_escape ) ) game_end();
             <kind>1</kind>
             <string>///Draw GUI
 
-if ( global.SSAO_ENABLE ) {
-    
-    shader_set( sh_post_combine );
-    
-    texture_set_stage( shader_get_sampler_index( sh_post_combine, "diffuse_buffer" ), surface_get_texture( diffuse_buffer ) );
-    texture_set_stage( shader_get_sampler_index( sh_post_combine, "ssao_buffer"    ), surface_get_texture( ssao_buffer    ) );
-    texture_set_interpolation_ext( shader_get_sampler_index( sh_post_combine, "ssao_buffer" ), true);
+if ( !keyboard_check( vk_f3 ) ) {
     
     draw_surface( diffuse_buffer, 0, 0 );
+    draw_set_blend_mode_ext( bm_zero, bm_src_colour );
+    draw_surface( ssao_buffer, 0, 0 );
+    draw_set_blend_mode( bm_normal );
     
+} else {
+    
+    shader_set( shd_ssao_combine );
+    texture_set_stage( shader_get_sampler_index( shd_ssao_combine, "diffuse_buffer" ), surface_get_texture( diffuse_buffer ) );
+    texture_set_stage( shader_get_sampler_index( shd_ssao_combine, "ssao_buffer"    ), surface_get_texture( ssao_buffer    ) );
+    texture_set_interpolation_ext( shader_get_sampler_index( shd_ssao_combine, "ssao_buffer" ), true);
+    draw_surface( diffuse_buffer, 0, 0 );
+    shader_reset();
+    
+}
+
+/*
+if ( global.ssao_enable ) {
+    
+    shader_set( shd_ssao_combine );
+    texture_set_stage( shader_get_sampler_index( shd_ssao_combine, "diffuse_buffer" ), surface_get_texture( diffuse_buffer ) );
+    texture_set_stage( shader_get_sampler_index( shd_ssao_combine, "ssao_buffer"    ), surface_get_texture( ssao_buffer    ) );
+    texture_set_interpolation_ext( shader_get_sampler_index( shd_ssao_combine, "ssao_buffer" ), true);
+    draw_surface( diffuse_buffer, 0, 0 );
     shader_reset();
     
 } else {
     
     draw_surface( diffuse_buffer, 0, 0 );
     
-}
+}*/
 </string>
           </argument>
         </arguments>
@@ -166,11 +182,11 @@ if ( debug ) {
 
 if ( debug ) {
     
-    draw_surface_ext( obj_ssao.normal_buffer, 0, 0, 0.25 / global.SSAO_RESOLUTION, 0.25 / global.SSAO_RESOLUTION, 0, c_white, 1 );
+    draw_surface_ext( obj_ssao.normal_buffer, 0, 0, 0.25 / global.ssao_resolution, 0.25 / global.ssao_resolution, 0, c_white, 1 );
     draw_set_color(c_black);
     draw_text(8, 8, "Normal Buffer");
     
-    draw_surface_ext( obj_ssao.depth_buffer, 320, 0, 0.25 / global.SSAO_RESOLUTION, 0.25 / global.SSAO_RESOLUTION, 0, c_white, 1 );
+    draw_surface_ext( obj_ssao.depth_buffer, 320, 0, 0.25 / global.ssao_resolution, 0.25 / global.ssao_resolution, 0, c_white, 1 );
     draw_set_color(c_black);
     draw_text(328, 8, "Linearized Depth Buffer");
     
@@ -178,7 +194,7 @@ if ( debug ) {
     draw_set_color(c_black);
     draw_text(648, 8, "Diffuse Buffer");
     
-    draw_surface_ext( obj_ssao.ssao_buffer, 960, 0, 0.25 / global.SSAO_RESOLUTION, 0.25 / global.SSAO_RESOLUTION, 0, c_white, 1 );
+    draw_surface_ext( obj_ssao.ssao_buffer, 960, 0, 0.25 / global.ssao_resolution, 0.25 / global.ssao_resolution, 0, c_white, 1 );
     draw_set_color(c_black);
     draw_text(968, 8, "SSAO Buffer");
     
@@ -207,10 +223,10 @@ if ( debug ) {
             <kind>1</kind>
             <string>///Draw
 
-if ( !surface_exists( depth_buffer     ) ) depth_buffer     = surface_create( view_wview[0] * global.SSAO_RESOLUTION, view_hview[0] * global.SSAO_RESOLUTION );
-if ( !surface_exists( normal_buffer    ) ) normal_buffer    = surface_create( view_wview[0] * global.SSAO_RESOLUTION, view_hview[0] * global.SSAO_RESOLUTION );
-if ( !surface_exists( ssao_buffer      ) ) ssao_buffer      = surface_create( view_wview[0] * global.SSAO_RESOLUTION, view_hview[0] * global.SSAO_RESOLUTION );
-if ( !surface_exists( ssao_buffer_temp ) ) ssao_buffer_temp = surface_create( view_wview[0] * global.SSAO_RESOLUTION, view_hview[0] * global.SSAO_RESOLUTION );
+if ( !surface_exists( depth_buffer     ) ) depth_buffer     = surface_create( view_wview[0] * global.ssao_resolution, view_hview[0] * global.ssao_resolution );
+if ( !surface_exists( normal_buffer    ) ) normal_buffer    = surface_create( view_wview[0] * global.ssao_resolution, view_hview[0] * global.ssao_resolution );
+if ( !surface_exists( ssao_buffer      ) ) ssao_buffer      = surface_create( view_wview[0] * global.ssao_resolution, view_hview[0] * global.ssao_resolution );
+if ( !surface_exists( ssao_buffer_temp ) ) ssao_buffer_temp = surface_create( view_wview[0] * global.ssao_resolution, view_hview[0] * global.ssao_resolution );
 if ( !surface_exists( diffuse_buffer   ) ) diffuse_buffer   = surface_create( view_wview[0], view_hview[0]);
 
 d3d_start();

@@ -29,7 +29,7 @@ uniform mat4 uProjectionMatrix;
 
 uniform vec2 uScreenDimension;
 
-uniform vec2  uSSAOKernel[16];
+uniform vec2  uSSAOKernel[SAMPLES];
 uniform float uSSAORadius;
 uniform float uSSAOStrength;
 uniform float uSSAOPower;
