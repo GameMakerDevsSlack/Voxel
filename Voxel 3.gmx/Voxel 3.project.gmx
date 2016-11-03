@@ -40,6 +40,7 @@
     <script>scripts\matrix_invert.gml</script>
     <scripts name="SSAO">
       <script>scripts\ssao_render_diffuse.gml</script>
+      <script>scripts\ssao_render_light.gml</script>
       <script>scripts\ssao_render_normal.gml</script>
       <script>scripts\ssao_render_depth.gml</script>
       <script>scripts\ssao_render_ssao.gml</script>
@@ -131,11 +132,12 @@
     <font>fonts\fnt_cambria16</font>
   </fonts>
   <objects name="objects">
+    <object>objects\obj_graphics</object>
+    <object>objects\obj_ssao</object>
+    <object>objects\obj_lighting</object>
     <object>objects\obj_init</object>
     <object>objects\obj_camera</object>
-    <object>objects\obj_ssao</object>
     <object>objects\obj_pot</object>
-    <object>objects\obj_lighting</object>
     <object>objects\obj_light</object>
   </objects>
   <rooms name="rooms">

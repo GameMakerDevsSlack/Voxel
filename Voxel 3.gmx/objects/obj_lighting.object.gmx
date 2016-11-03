@@ -142,8 +142,6 @@ draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMo
             <string>///Draw
 
 //Initialise 3D
-
-
 d3d_start();
 d3d_set_lighting( false );
 texture_set_interpolation( true );

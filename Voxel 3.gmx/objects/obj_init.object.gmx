@@ -30,10 +30,10 @@
 application_surface_draw_enable( false );
 
 global.ssao_samples    = 16;
-global.ssao_radius     = 1.50;
-global.ssao_strength   = 0.20;
-global.ssao_power      = 1.10;
-global.ssao_resolution = 1.0;
+global.ssao_radius     = 3;
+global.ssao_strength   = 0.2;
+global.ssao_power      = 1;
+global.ssao_resolution = 1;
 global.ssao_blur       = 1;
 global.ssao_enable     = true;
 global.ssao_kernel     = ssao_generate_poisson_distribution( global.ssao_samples );
