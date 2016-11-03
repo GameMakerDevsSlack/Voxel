@@ -1,7 +1,7 @@
 ; RunnerInstaller.nsi
 ;
 ; This script is based on example1.nsi, but it remember the directory, 
-; has uninstall support and (optionallight_from_y) installs start menu shortcuts.
+; has uninstall support and (optionally) installs start menu shortcuts.
 ;
 ; It will install example2.nsi into a directory that the user selects,
 
@@ -78,7 +78,7 @@ OutFile "${INSTALLER_FILENAME}"
 InstallDir "$PROFILE\${APP_NAME}"
 
 ; Registry key to check for directory (so if you install again, it will 
-; overwrite the old one automaticallight_from_y)
+; overwrite the old one automatically)
 InstallDirRegKey HKCU "Software\Runner" "Install_Dir"
 
 ; Request application privileges for Windows Vista

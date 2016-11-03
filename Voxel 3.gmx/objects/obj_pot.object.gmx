@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>///Create
 
+z = 8;
+
 quaternion = quaternion_init();
 quaternion_basis = quaternion;
 
@@ -37,7 +39,7 @@ slerp_duration = 1400;
 slerp_quaternion_a = quaternion;
 slerp_quaternion_b = quaternion_random();
 
-demo_mode = false;
+demo_mode = true;
 </string>
           </argument>
         </arguments>
@@ -62,25 +64,38 @@ demo_mode = false;
             <kind>1</kind>
             <string>///Step
 
+if ( keyboard_check( ord( "G" ) ) )
+or ( keyboard_check( ord( "T" ) ) )
+or ( keyboard_check( ord( "F" ) ) )
+or ( keyboard_check( ord( "H" ) ) )
+or ( keyboard_check( ord( "Y" ) ) )
+or ( keyboard_check( ord( "R" ) ) )
+or ( keyboard_check( ord( "J" ) ) )
+or ( keyboard_check( ord( "L" ) ) )
+or ( keyboard_check( ord( "O" ) ) )
+or ( keyboard_check( ord( "U" ) ) )
+or ( keyboard_check( ord( "K" ) ) )
+or ( keyboard_check( ord( "I" ) ) ) demo_mode = false;
+
 if ( !demo_mode ) {
     
     if ( !slerp_go ) {
         
-        if ( keyboard_check( ord( "G" ) ) ) quaternion = quaternion_rotate_x( quaternion,  1 );
-        if ( keyboard_check( ord( "T" ) ) ) quaternion = quaternion_rotate_x( quaternion, -1 );
-        if ( keyboard_check( ord( "F" ) ) ) quaternion = quaternion_rotate_y( quaternion,  1 );
-        if ( keyboard_check( ord( "H" ) ) ) quaternion = quaternion_rotate_y( quaternion, -1 );
-        if ( keyboard_check( ord( "Y" ) ) ) quaternion = quaternion_rotate_z( quaternion,  1 );
-        if ( keyboard_check( ord( "R" ) ) ) quaternion = quaternion_rotate_z( quaternion, -1 );
+        if ( keyboard_check( ord( "G" ) ) ) quaternion = quaternion_rotate_x( quaternion,  2 );
+        if ( keyboard_check( ord( "T" ) ) ) quaternion = quaternion_rotate_x( quaternion, -2 );
+        if ( keyboard_check( ord( "F" ) ) ) quaternion = quaternion_rotate_y( quaternion,  2 );
+        if ( keyboard_check( ord( "H" ) ) ) quaternion = quaternion_rotate_y( quaternion, -2 );
+        if ( keyboard_check( ord( "Y" ) ) ) quaternion = quaternion_rotate_z( quaternion,  2 );
+        if ( keyboard_check( ord( "R" ) ) ) quaternion = quaternion_rotate_z( quaternion, -2 );
         
-        if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_roll(  quaternion,  1 );
-        if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_roll(  quaternion, -1 );
-        if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_yaw(   quaternion,  1 );
-        if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_yaw(   quaternion, -1 );
-        if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_pitch( quaternion,  1 );
-        if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_pitch( quaternion, -1 );
+        if ( keyboard_check( ord( "J" ) ) ) quaternion = quaternion_roll(  quaternion,  2 );
+        if ( keyboard_check( ord( "L" ) ) ) quaternion = quaternion_roll(  quaternion, -2 );
+        if ( keyboard_check( ord( "O" ) ) ) quaternion = quaternion_yaw(   quaternion,  2 );
+        if ( keyboard_check( ord( "U" ) ) ) quaternion = quaternion_yaw(   quaternion, -2 );
+        if ( keyboard_check( ord( "K" ) ) ) quaternion = quaternion_pitch( quaternion,  2 );
+        if ( keyboard_check( ord( "I" ) ) ) quaternion = quaternion_pitch( quaternion, -2 );
         
-        if ( keyboard_check_pressed( vk_control ) ) {
+        if ( keyboard_check_pressed( vk_space ) ) {
             slerp_go = true;
             slerp_start = current_time;
             slerp_quaternion_a = quaternion;
@@ -107,7 +122,7 @@ if ( !demo_mode ) {
         
     if ( keyboard_check_pressed( vk_enter ) ) demo_mode = false;
     
-    if ( keyboard_check_pressed( vk_control ) ) {
+    if ( keyboard_check_pressed( vk_space ) ) {
         demo_mode = false;
         slerp_go = true;
         slerp_start = current_time;
@@ -151,8 +166,9 @@ if ( !demo_mode ) {
 
 d3d_transform_set_translation( -8, -8, -8 );
 matrix_multiply_world( quaternion_matrix( quaternion ) );
-d3d_transform_add_translation( x, y, 40 + 20 * sin( x + y ) );
-vertex_submit( global.vbf_pot, pr_trianglelist, background_get_texture( bck_blank ) );
+//d3d_transform_add_scaling( 32, 32, 32 );
+d3d_transform_add_translation( x, y, z );
+vertex_submit( global.vbf_pot, pr_trianglelist, background_get_texture( bck_white ) );
 d3d_transform_set_identity();
 </string>
           </argument>

@@ -25,9 +25,88 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Create
+            <string>/// Init Shaders
+SSAO_INIT();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string> /// Debug
+debugWidth  = 240;
+debugHeight = 200;
+debugX      = view_wview[0] - 16 - debugWidth;
+debugY      = view_hview[0] - 16 - debugHeight;
 
-debug = false;
+// Sliders
+slider_radius = instance_create(debugX + 16, debugY + 16, obj_slider);
+slider_radius.text = "Radius";
+slider_radius.valueMIN    = 0.2;
+slider_radius.valueMAX    = 5.0;
+slider_radius.offsetX     = 90;
+slider_radius.sliderWidth = 118;
+slider_radius.sliderX     = getSliderPositionFromValue( slider_radius, global.ssao_radius );
+
+slider_strength = instance_create(debugX + 16, debugY + 48, obj_slider);
+slider_strength.text = "Strength";
+slider_strength.valueMIN    = 0.05;
+slider_strength.valueMAX    = 0.5;
+slider_strength.offsetX     = 90;
+slider_strength.sliderWidth = 118;
+slider_strength.sliderX     = getSliderPositionFromValue( slider_strength, global.ssao_strength );
+
+slider_power = instance_create(debugX + 16, debugY + 80, obj_slider);
+slider_power.text = "Power";
+slider_power.valueMIN    = 1;
+slider_power.valueMAX    = 32;
+slider_power.offsetX     = 90;
+slider_power.sliderWidth = 118;
+slider_power.sliderX = getSliderPositionFromValue( slider_power, global.ssao_power );
+
+slider_blur = instance_create(debugX + 16, debugY + 112, obj_slider);
+slider_blur.text = "SSAO Blur";
+slider_blur.valueMIN    = 0;
+slider_blur.valueMAX    = 4;
+slider_blur.offsetX     = 90;
+slider_blur.sliderWidth = 118;
+slider_blur.sliderX = getSliderPositionFromValue( slider_blur, global.ssao_blur_PASSES );
+
+
+checkbox_ssao = instance_create(debugX + 16, debugY + 144, obj_checkbox);
+checkbox_ssao.text = "Render SSAO";
+checkbox_ssao.value = global.ssao_enable;
+
+checkbox_diffuse = instance_create(debugX + 16, debugY + 176, obj_checkbox);
+checkbox_diffuse.text = "Render Diffuse";
+checkbox_diffuse.value = global.DIFFUSE_ENABLE;
+
+
+// Sliders
+draw_set_font( fnt_debug2 );
+draw_set_alpha( 0.75 );
+draw_set_color( c_white );
+draw_text( debugX + 16, debugY + 16, "Strength");
+draw_text( debugX + 16, debugY + 32, "Radius");
+
+// counters
+fps_real_avg_cum    = 1;
+fps_real_count      = 0;
+fps_real_avg        = fps_real;
 </string>
           </argument>
         </arguments>
@@ -50,35 +129,41 @@ debug = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Step
+            <string>/// Modify SSAO
 
-if ( keyboard_check_pressed( vk_f12 ) ) debug = !debug;
-with( obj_light ) if ( keyboard_check_pressed( vk_f11 ) ) light_soft = !light_soft;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="74">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw GUI Begin
 
-draw_surface( application_surface, 0, 0 );
+// change displY of FBOS
+if ( keyboard_check_pressed(vk_space) ) {
+    global.displayFBO = !global.displayFBO;
+}
+
+// Regenerate SSAO kernal
+if ( keyboard_check_pressed(vk_enter) ) {
+    global.ssao_kernel = generateRandomPoissonDisk( global.ssao_samples );
+}
+
+// Regenerate SSAO noise
+if ( keyboard_check_pressed(vk_rshift) ) {
+    generateNoise( global.ssao_noise );
+}
+
+// Change SSAO radius
+global.ssao_radius = slider_radius.value;
+
+// Change SSAO strength
+global.ssao_strength = slider_strength.value
+
+// Change SSAO power
+global.ssao_power = round(slider_power.value);
+
+// Change SSAO blur
+global.ssao_blur_PASSES = round(slider_blur.value);
+
+// Enable/disable SSAO
+global.ssao_enable = checkbox_ssao.value;
+
+// Enable/disable diffuse
+global.DIFFUSE_ENABLE = checkbox_diffuse.value;
 </string>
           </argument>
         </arguments>
@@ -101,22 +186,10 @@ draw_surface( application_surface, 0, 0 );
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw GUI
+            <string>/// Draw the final SSAO
+SSAO_DRAW();
 
-if ( debug ) {
-    draw_surface_stretched( obj_light.light_depth_surface, 0, 0, 720, 720 );
-    draw_set_colour( c_red );
-    draw_set_font( fnt_cambria16 );
-    draw_text( 5, 5, string( global.cubes * 12 ) + "#fps=" + string( fps ) + "/" + string( floor( fps_real ) ) );
-    draw_set_colour( c_white );
-}
-
-draw_set_font( fnt_cambria16 );
-draw_set_colour( c_white );
-draw_set_valign( fa_bottom );
-draw_text( 5, room_height - 5, string( fps ) + "/" + string( floor( fps_real ) ) );
-draw_set_valign( fa_top );
-draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMobOfSteve##WASDQE - Rotate in world#IJKLUO - Rotate locally#Enter - Toggle demo mode#Space - Return to upright" );
+room_caption = string(fps);
 </string>
           </argument>
         </arguments>
@@ -139,45 +212,8 @@ draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMo
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw
-
-//Initialise 3D
-d3d_start();
-d3d_set_lighting( false );
-draw_set_alpha_test( true );
-texture_set_interpolation( true );
-texture_set_repeat( false );
-d3d_set_culling( true );
-
-with( obj_light ) event_user( 1 );
-with( obj_camera ) event_user( 1 );
-
-//Set shadow mapping shader
-if ( instance_exists( obj_light ) ) {
-    
-    with( obj_light ) {
-        var _shader;
-        if ( light_soft ) _shader = shd_light_soft else _shader = shd_light_hard;
-        shader_set( _shader );
-        shader_set_uniform_matrix_array( shader_get_uniform( _shader, "lightmatrix" ), light_proj_matrix );
-        texture_set_stage( shader_get_sampler_index( _shader, "depthmap" ),            surface_get_texture ( light_depth_surface ) );
-        shader_set_uniform_f( shader_get_uniform( _shader, "depthsize" ),              surface_get_width( light_depth_surface ) );
-        shader_set_uniform_f( shader_get_uniform( _shader, "lightcol" ),               light_colour_r, light_colour_g, light_colour_b );
-        shader_set_uniform_f( shader_get_uniform( _shader, "ambcol" ),                 light_ambient_r, light_ambient_g, light_ambient_b, 1 );
-        draw_scene();
-        shader_reset();
-    }
-    
-} else {
-    
-    draw_scene();
-    
-}
-
-with( obj_light ) event_user( 0 );
-
-d3d_end();
-draw_set_colour( c_white );
+            <string>/// Render the SSAO buffers offscreen
+SSAO_RENDER();
 </string>
           </argument>
         </arguments>

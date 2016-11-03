@@ -10,21 +10,21 @@ Install and use this Application for personal, or commercial use [provided you h
 
 You must not:
 
-use, copy, transfer, distribute modify, adapt, merge, translate, decompile, disassemble, or reverse engineer the Application or part of it except as expresslight_from_y permitted by this Licence;
+use, copy, transfer, distribute modify, adapt, merge, translate, decompile, disassemble, or reverse engineer the Application or part of it except as expressly permitted by this Licence;
 remove, modify, or tamper with any copyright, trademark or other notice;
 use the Application for any illegal, unlawful or immoral purposes.
 
 
 Term
 ----
-This License will end automaticallight_from_y if you breach any of the terms.
+This License will end automatically if you breach any of the terms.
 When this License ends you must stop all use of the Application and destroy and erase any copies you have.
 
 
 Liability
 ---------
 
-YoYo Games Limited (“YoYo Games) is not involved in the creation of this Application except onlight_from_y that it was made using GameMaker. YoYo Games warrants onlight_from_y that GameMaker will function satisfactorilight_from_y if used properlight_from_y and on the correct operating system.
+YoYo Games Limited (“YoYo Games) is not involved in the creation of this Application except only that it was made using GameMaker. YoYo Games warrants only that GameMaker will function satisfactorily if used properly and on the correct operating system.
 YoYo Games does not warrant that the operation of the Appication will be uninterrupted or error free or that errors can be corrected. You install and use the Application at your own risk and in no event will YoYo Games be liable to you for any loss or damage of any kind (except personal injury or death arising from YoYo Games’ negligence) including lost profits or other consequential loss arising from the use of or inability to use the Application or from errors or deficiencies in it whether caused by negligence or otherwise.
 To the maximum extent permitted by law, YoYo Games Limited excludes liability for all warranties, conditions and other terms which but for this notice would have effect.
 

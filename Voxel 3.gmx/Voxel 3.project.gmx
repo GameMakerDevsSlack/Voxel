@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="4" name="datafiles">
+  <datafiles number="18" name="datafiles">
     <datafile>
       <name>pot.vox</name>
       <exists>-1</exists>
@@ -22,15 +22,32 @@
       <filename>pot.vox</filename>
     </datafile>
   </datafiles>
-  <NewExtensions/>
+  <NewExtensions>
+    <extension index="0">extensions\Screen Space Ambient Occlusion</extension>
+  </NewExtensions>
   <sounds name="sound"/>
   <sprites name="sprites"/>
   <backgrounds name="background">
-    <background>background\bck_blank</background>
+    <background>background\bck_white</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <script>scripts\array_create.gml</script>
+    <script>scripts\scr_voxel_build_rgb.gml</script>
+    <script>scripts\scr_voxel_load.gml</script>
     <script>scripts\draw_scene.gml</script>
+    <script>scripts\matrix_multiply_world.gml</script>
+    <script>scripts\matrix_invert.gml</script>
+    <scripts name="SSAO">
+      <script>scripts\ssao_render_diffuse.gml</script>
+      <script>scripts\ssao_render_normal.gml</script>
+      <script>scripts\ssao_render_depth.gml</script>
+      <script>scripts\ssao_render_ssao.gml</script>
+      <script>scripts\ssao_render_blur.gml</script>
+      <script>scripts\ssao_render_hlsl.gml</script>
+      <script>scripts\ssao_generate_poisson_distribution.gml</script>
+      <script>scripts\ssao_generate_noise.gml</script>
+    </scripts>
     <scripts name="quaternion">
       <script>scripts\quaternion_init.gml</script>
       <script>scripts\quaternion_lerp.gml</script>
@@ -44,7 +61,6 @@
       <script>scripts\quaternion_rotate_y.gml</script>
       <script>scripts\quaternion_rotate_z.gml</script>
       <script>scripts\quaternion_yaw.gml</script>
-      <script>scripts\matrix_multiply_world.gml</script>
     </scripts>
     <scripts name="ease">
       <script>scripts\scr_juju_ease_back_in.gml</script>
@@ -92,68 +108,40 @@
       <script>scripts\scr_juju_ease_sine_inout.gml</script>
       <script>scripts\scr_juju_ease_sine_out.gml</script>
     </scripts>
-    <script>scripts\array_create.gml</script>
-    <script>scripts\scr_voxel_build_rgb.gml</script>
-    <script>scripts\scr_voxel_load.gml</script>
-    <scripts name="Voxel 3">
-      <script>scripts\generate_noise.gml</script>
-      <script>scripts\generate_poisson_distribution.gml</script>
-      <script>scripts\render_blur_ssao.gml</script>
-      <script>scripts\render_depth_buffer.gml</script>
-      <script>scripts\render_diffuse_buffer.gml</script>
-      <script>scripts\render_hlsl.gml</script>
-      <script>scripts\render_normal_buffer.gml</script>
-      <script>scripts\render_ssao_buffer.gml</script>
-      <scripts name="Matrix">
-        <script>scripts\Array2DToMatrix.gml</script>
-        <script>scripts\TransposeMatrix3.gml</script>
-        <script>scripts\MatrixToArray2D.gml</script>
-        <script>scripts\InverseMatrix4.gml</script>
-        <script>scripts\InverseMatrix3.gml</script>
-      </scripts>
-    </scripts>
   </scripts>
   <shaders name="shaders">
-    <shaders name="Voxel 2">
-      <shader type="GLSLES">shaders\shd_depth.shader</shader>
-      <shader type="GLSLES">shaders\shd_point.shader</shader>
-      <shader type="GLSLES">shaders\shd_soft.shader</shader>
-      <shader type="GLSLES">shaders\shd_default.shader</shader>
-      <shader type="GLSLES">shaders\shd_point_debug.shader</shader>
-      <shader type="GLSLES">shaders\shd_depth_linear.shader</shader>
-    </shaders>
-    <shaders name="Voxel 3">
-      <shader type="GLSLES">shaders\sh_post_combine.shader</shader>
-      <shader type="GLSLES">shaders\sh_post_ssao.shader</shader>
-      <shader type="GLSLES">shaders\sh_post_ssao_blur.shader</shader>
+    <shader type="GLSLES">shaders\shd_default.shader</shader>
+    <shaders name="SSAO">
       <shader type="GLSLES">shaders\shd_ssao_depth_linear.shader</shader>
-      <shader type="HLSL9">shaders\shd_ssao_hlsl.shader</shader>
       <shader type="GLSLES">shaders\shd_ssao_normal.shader</shader>
+      <shader type="HLSL9">shaders\shd_ssao_hlsl.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_post.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_blur.shader</shader>
+      <shader type="GLSLES">shaders\shd_ssao_combine.shader</shader>
+    </shaders>
+    <shaders name="lighting">
+      <shader type="GLSLES">shaders\shd_light_depth.shader</shader>
+      <shader type="GLSLES">shaders\shd_light_hard.shader</shader>
+      <shader type="GLSLES">shaders\shd_light_soft.shader</shader>
     </shaders>
   </shaders>
   <fonts name="fonts">
-    <font>fonts\fnt_main</font>
+    <font>fonts\fnt_debug1</font>
+    <font>fonts\fnt_debug2</font>
     <font>fonts\fnt_cambria16</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_init</object>
     <object>objects\obj_camera</object>
-    <object>objects\obj_lighting_manager</object>
+    <object>objects\obj_ssao</object>
     <object>objects\obj_pot</object>
+    <object>objects\obj_lighting</object>
     <object>objects\obj_light</object>
-    <objects name="Voxel 3">
-      <object>objects\obj_camera_new</object>
-      <object>objects\obj_ssao</object>
-    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
     <room>rooms\rm_main</room>
   </rooms>
-  <constants number="2">
-    <constant name="GM_build_date">0</constant>
-    <constant name="GM_version">0</constant>
-  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

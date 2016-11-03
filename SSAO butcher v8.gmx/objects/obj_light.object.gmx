@@ -37,14 +37,15 @@ light_ambient_b       = 0.05;
 light_colour_r        = 1.00;
 light_colour_g        = 0.80;
 light_colour_b        = 0.60;
-light_from_x          = -160;
-light_from_y          = -160;
-light_from_z          =  160;
-light_to_x            =   64;
-light_to_y            =   64;
+light_from_x          =  388;
+light_from_y          =  188;
+light_from_z          =   42;
+light_to_x            =  437;
+light_to_y            =  161;
 light_to_z            =    0;
 light_fov             =   50;
-light_zfar            = obj_camera.zfar;
+light_znear           =    1;
+light_zfar            = 1024;
 
 background_colour = make_colour_rgb( light_ambient_r*255, light_ambient_g*255, light_ambient_b*255 );
 </string>
@@ -81,7 +82,8 @@ draw_clear( c_white );
 d3d_set_projection_ext( light_from_x, light_from_y, light_from_z, 
                           light_to_x,   light_to_y,   light_to_z,
                                    0,            0,            1,
-                           light_fov,            1,            1, light_zfar );
+                           light_fov,            1,
+                           light_znear, light_zfar );
 
 //Store this projection matrix for later
 light_proj_matrix = matrix_multiply( matrix_get( matrix_view ), matrix_get( matrix_projection ) );
@@ -90,6 +92,7 @@ light_proj_matrix = matrix_multiply( matrix_get( matrix_view ), matrix_get( matr
 shader_set( shd_light_depth );
 draw_scene();
 shader_reset();
+
 surface_reset_target();
 </string>
           </argument>
@@ -120,7 +123,7 @@ if ( !keyboard_check( vk_space ) ) {
     draw_set_colour( make_colour_rgb( light_colour_r*255, light_colour_g*255, light_colour_b*255 ) );
     d3d_draw_ellipsoid( light_from_x-1, light_from_y-1, light_from_z-1,
                         light_from_x+1, light_from_y+1, light_from_z+1,
-                        background_get_texture( bck_nadda ), 1, 1, 16 );
+                        background_get_texture( bck_white ), 1, 1, 16 );
 }
 </string>
           </argument>

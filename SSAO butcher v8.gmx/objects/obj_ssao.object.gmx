@@ -219,7 +219,7 @@ if ( !surface_exists( ssao_buffer_temp ) ) ssao_buffer_temp = surface_create( vi
 if ( !surface_exists( diffuse_buffer   ) ) diffuse_buffer   = surface_create( view_wview[0], view_hview[0]);
 
 d3d_start();
-d3d_set_culling( false );
+d3d_set_culling( true );
 d3d_set_hidden( true );
 d3d_set_perspective( true );
 

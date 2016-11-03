@@ -27,34 +27,26 @@
             <kind>1</kind>
             <string>///Create
 
-//display_reset( 2, false );
+application_surface_draw_enable( false );
+
+global.ssao_samples    = 16;
+global.ssao_radius     = 1.50;
+global.ssao_strength   = 0.20;
+global.ssao_power      = 1.10;
+global.ssao_resolution = 1.0;
+global.ssao_blur       = 1;
+global.ssao_enable     = true;
+global.ssao_kernel     = ssao_generate_poisson_distribution( global.ssao_samples );
+global.ssao_noise      = ssao_generate_noise( 4 );
 
 global.voxel_palette = scr_voxel_build_rgb();
-
 vertex_format_begin();
 vertex_format_add_position_3d();
-vertex_format_add_textcoord();
 vertex_format_add_colour();
 vertex_format_add_normal();
 global.voxel_vft_simple = vertex_format_end();
-
-global.triangles = 0;
-global.cubes = 0;
 global.vbf_pot = scr_voxel_load( "pot.vox", global.voxel_vft_simple );
 vertex_freeze( global.vbf_pot );
-
-application_surface_draw_enable( false );
-
-global.SSAO_SAMPLES     = 16;
-global.SSAO_RADIUS      = 5.00;
-global.SSAO_STRENGTH    = 0.06;
-global.SSAO_POWER       = 4.14;
-global.SSAO_RESOLUTION  = 1.0;
-global.SSAO_BLUR_PASSES = 1;
-global.SSAO_ENABLE      = true;
-global.DIFFUSE_ENABLE   = true;
-global.SSAO_KERNEL      = generate_poisson_distribution( global.SSAO_SAMPLES );
-global.SSAO_NOISE       = generate_noise( 4 );
 
 room_goto_next();
 </string>

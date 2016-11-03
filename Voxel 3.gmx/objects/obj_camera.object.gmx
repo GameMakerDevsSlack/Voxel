@@ -27,16 +27,36 @@
             <kind>1</kind>
             <string>///Create
 
-randomize();
+camera_from_target_x = 400;
+camera_from_target_y = 183;
+camera_from_target_z = 17;
 
-debug = false;
+camera_from_x = 160;
+camera_from_y = 144;
+camera_from_z = 17;
 
-direction = 315;
-zdir      = -25;
-z         = 100;
-aspect    = view_wview[0]/view_hview[0];
-znear     = 1;
-zfar      = 2000;
+camera_up_x = 0;
+camera_up_y = 0;
+camera_up_z = 1;
+
+camera_look_x = 1;
+camera_look_y = 0;
+camera_look_z = 0;
+
+camera_yaw = 6.7;
+camera_pitch = 10.7;
+
+camera_znear = 1;
+camera_zfar = 1024;
+camera_fov = 75;
+
+camera_to_x = camera_from_x + camera_look_x * dcos( camera_pitch );
+camera_to_y = camera_from_y + camera_look_y * dcos( camera_pitch );
+camera_to_z = camera_from_z + camera_look_z;
+
+mouse_lock = false;
+mouse_lock_x = 0;
+mouse_lock_y = 0;
 </string>
           </argument>
         </arguments>
@@ -61,30 +81,64 @@ zfar      = 2000;
             <kind>1</kind>
             <string>///Step
 
-if ( mouse_check_button( mb_left ) ) {
+if ( mouse_check_button_pressed( mb_right ) ) {
     
-    var _wx = window_mouse_get_x();
-    var _wy = window_mouse_get_y();
-    var _ww = window_get_width()/2;
-    var _wh = window_get_height()/2;
+    mouse_lock = !mouse_lock;
     
-    if ( window_has_focus() ) window_mouse_set( _ww, _wh );
-    direction += 0.2 * ( _ww - _wx );
-    zdir = clamp( zdir + 0.2*( _wh - _wy ), -89, 89 );
+    if ( mouse_lock ) {
+        mouse_lock_x = window_get_width()/2;
+        mouse_lock_y = window_get_height()/2;
+        window_mouse_set( mouse_lock_x, mouse_lock_y );
+        window_set_cursor( cr_none );
+    }
+    
+} else if ( mouse_lock ) {
+    
+    // Calculate mouse change
+    var _dx = window_mouse_get_x() - mouse_lock_x;
+    var _dy = window_mouse_get_y() - mouse_lock_y;
+    window_mouse_set( mouse_lock_x, mouse_lock_y );
+    
+    // Affect pitch/yaw
+    camera_pitch -= _dy * 0.1;
+    camera_yaw   -= _dx * 0.1;
+    camera_pitch = clamp( camera_pitch, -89.9, 89.9);
+    
+    // Calculate look vectors
+    camera_look_x = dcos( -camera_yaw );
+    camera_look_y = dsin( -camera_yaw );
+    camera_look_z = dsin( camera_pitch );
+    
+} else {
+    
+    window_set_cursor( cr_default );
     
 }
 
-var _axis = 1 * ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) );
-var _strafe = 1 * ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
-x += lengthdir_x( _axis, direction ) + lengthdir_x( _strafe, direction - 90 );
-y += lengthdir_y( _axis, direction ) + lengthdir_y( _strafe, direction - 90 );
-z += 1 * ( keyboard_check( ord( "Q" ) ) - keyboard_check( ord( "E" ) ) );
+// Movement
+var _cam_speed = 0.8;
+var _camera_look_x_pitch = camera_look_x * dcos( camera_pitch );
+var _camera_look_y_pitch = camera_look_y * dcos( camera_pitch );
+if( keyboard_check( ord( "W" ) ) ) { camera_from_target_x += _camera_look_x_pitch * _cam_speed; camera_from_target_y += _camera_look_y_pitch * _cam_speed; camera_from_target_z += camera_look_z * _cam_speed }
+if( keyboard_check( ord( "S" ) ) ) { camera_from_target_x -= _camera_look_x_pitch * _cam_speed; camera_from_target_y -= _camera_look_y_pitch * _cam_speed; camera_from_target_z -= camera_look_z * _cam_speed }
+if( keyboard_check( ord( "A" ) ) ) { camera_from_target_x += camera_look_y * _cam_speed;        camera_from_target_y -= camera_look_x * _cam_speed; }
+if( keyboard_check( ord( "D" ) ) ) { camera_from_target_x -= camera_look_y * _cam_speed;        camera_from_target_y += camera_look_x * _cam_speed; }
+if( keyboard_check( ord( "Q" ) ) ) { camera_from_target_z += _cam_speed; }
+if( keyboard_check( ord( "E" ) ) ) { camera_from_target_z -= _cam_speed; }
+
+camera_from_x = lerp( camera_from_x, camera_from_target_x, 0.1 );
+camera_from_y = lerp( camera_from_y, camera_from_target_y, 0.1 );
+camera_from_z = lerp( camera_from_z, camera_from_target_z, 0.1 );
+
+camera_to_x = camera_from_x + camera_look_x * dcos( camera_pitch );
+camera_to_y = camera_from_y + camera_look_y * dcos( camera_pitch );
+camera_to_z = camera_from_z + camera_look_z;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="11">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -101,19 +155,13 @@ z += 1 * ( keyboard_check( ord( "Q" ) ) - keyboard_check( ord( "E" ) ) );
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///UE1 - Set projection
+            <string>///UE0 - Set camera projection
 
-var _x_to = x + dsin( direction + 90 ) * dcos( zdir );
-var _y_to = y + dcos( direction + 90 ) * dcos( zdir );
-var _z_to = z + dsin( zdir );
-
-d3d_set_projection_ext(     x,     y,     z,
-                        _x_to, _y_to, _z_to,
-                            0,     0,     1,
-                        45, aspect, 0.01, zfar );
-
-//mtx_projection     = matrix_get( matrix_projection );
-//mtx_inv_projection = InverseMatrix4( mtx_projection );
+d3d_set_projection_ext( camera_from_x, camera_from_y, camera_from_z,
+                        camera_to_x,   camera_to_y,   camera_to_z,
+                        camera_up_x,   camera_up_y,   camera_up_z,
+                        camera_fov, view_wview[0]/view_hview[0],
+                        camera_znear, camera_zfar);
 </string>
           </argument>
         </arguments>

@@ -92,11 +92,11 @@ float4 packNormal( float3 Normal ){
 void main( in v2p IN, out p2s OUT ){
 
     // Alpha test
-    //float4 base = tex2D( gm_BaseTexture, IN.Texcoord );
-    //clip( (base.a <= 0.40)? -1:1 );
+    float4 base = IN.Colour * tex2D( gm_BaseTexture, IN.Texcoord );
+    clip( (base.a <= 0.40)? -1:1 );
     
     // DIFFUSE
-    OUT.Colour0 = IN.Colour; //float4( (IN.Colour).rgb * base.rgb, 1.0 ) /** IN.Colour*/;
+    OUT.Colour0 = float4( base.rgb, 1.0 ) /** IN.Colour*/;
     
     // DEPTH
     OUT.Colour1 = float4( packDepth( IN.linearizedDepth ), 1.0 );

@@ -119,7 +119,7 @@
       <shader type="GLSLES">shaders\shd_ssao_blur.shader</shader>
       <shader type="GLSLES">shaders\shd_ssao_combine.shader</shader>
     </shaders>
-    <shaders name="light">
+    <shaders name="lighting">
       <shader type="GLSLES">shaders\shd_light_depth.shader</shader>
       <shader type="GLSLES">shaders\shd_light_hard.shader</shader>
       <shader type="GLSLES">shaders\shd_light_soft.shader</shader>
@@ -128,13 +128,14 @@
   <fonts name="fonts">
     <font>fonts\fnt_debug1</font>
     <font>fonts\fnt_debug2</font>
+    <font>fonts\fnt_cambria16</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_init</object>
     <object>objects\obj_camera</object>
     <object>objects\obj_ssao</object>
     <object>objects\obj_pot</object>
-    <object>objects\obj_lighting_manager</object>
+    <object>objects\obj_lighting</object>
     <object>objects\obj_light</object>
   </objects>
   <rooms name="rooms">
