@@ -36,6 +36,7 @@
     <script>scripts\scr_voxel_build_rgb.gml</script>
     <script>scripts\scr_voxel_load.gml</script>
     <script>scripts\draw_scene.gml</script>
+    <script>scripts\draw_diffuse_scene.gml</script>
     <script>scripts\draw_scene_id.gml</script>
     <script>scripts\matrix_multiply_world.gml</script>
     <script>scripts\matrix_invert.gml</script>

@@ -17,13 +17,13 @@ if ( instance_exists( obj_light ) ) and ( light_on ) {
         shader_set_uniform_f( shader_get_uniform( _shader, "depthsize" ),              surface_get_width( light_depth_surface ) );
         shader_set_uniform_f( shader_get_uniform( _shader, "lightcol" ),               light_colour_r, light_colour_g, light_colour_b );
         shader_set_uniform_f( shader_get_uniform( _shader, "ambcol" ),                 light_ambient_r, light_ambient_g, light_ambient_b, 1 );
-        draw_scene();
+        draw_diffuse_scene();
         shader_reset();
     }
     
 } else {
     
-    draw_scene();
+    draw_diffuse_scene();
     
 }
 

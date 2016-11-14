@@ -211,6 +211,7 @@ if ( debug ) {
     draw_text( 5, 5, "MagicaVoxel importer#" +
                      "3rd Nov 2016#@jujuadams##" +
                      "Art by @AngryMobOfSteve#" +
+                     "Shadow Mapping by @XorDev#" +
                      "SSAO by @MishMashGames##" +
                      "Space - Lock/Unlock mouse#" +
                      "WASDQE - Move#" + 
