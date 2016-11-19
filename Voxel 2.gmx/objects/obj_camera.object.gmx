@@ -180,9 +180,6 @@ if ( debug ) {
             <kind>1</kind>
             <string>///Draw
 
-//shader_set( shd_depth_linear );
-//shader_set_uniform_f( shader_get_uniform( shd_depth_linear, "uCameraFar" ), zfar );
-
 //Initialise 3D
 d3d_start();
 d3d_set_lighting( false );

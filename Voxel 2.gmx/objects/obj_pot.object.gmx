@@ -164,42 +164,9 @@ if ( !demo_mode ) {
 
 d3d_transform_set_translation( -8, -8, -8 );
 matrix_multiply_world( quaternion_matrix( quaternion ) );
-//d3d_transform_add_scaling( 32, 32, 32 );
 d3d_transform_add_translation( x, y, 40 + 20 * sin( x + y ) );
 vertex_submit( global.vbf_pot, pr_trianglelist, -1 );
 d3d_transform_set_identity();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw GUI
-
-exit;
-
-draw_set_font( fnt_cambria16 );
-draw_set_colour( c_white );
-draw_set_valign( fa_bottom );
-draw_text( 5, room_height - 5, string( fps ) + "/" + string( floor( fps_real ) ) );
-draw_set_valign( fa_top );
-draw_text( 5, 5, "MagicaVoxel importer#26th Oct 2016#@jujuadams##Art by @AngryMobOfSteve##WASDQE - Rotate in world#IJKLUO - Rotate locally#Enter - Toggle demo mode#Space - Return to upright" );
 </string>
           </argument>
         </arguments>

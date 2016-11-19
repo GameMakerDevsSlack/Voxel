@@ -102,7 +102,6 @@
     <shader type="GLSLES">shaders\shd_soft.shader</shader>
     <shader type="GLSLES">shaders\shd_default.shader</shader>
     <shader type="GLSLES">shaders\shd_point_debug.shader</shader>
-    <shader type="GLSLES">shaders\shd_depth_linear.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
